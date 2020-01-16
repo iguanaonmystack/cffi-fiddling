@@ -3,19 +3,19 @@
 
 #include "plotter.h"
 
-void plot(int *** data, int xdepth, int ydepth, int zdepth) {
+void plot(int *** data, size_t xdepth, size_t ydepth, size_t zdepth) {
     size_t i, j, k;
     for (i = 0; i < xdepth; i ++) {
-        printf("x = %2d |      z\n", i);
+        printf("x = %2zd |      z\n", i);
         printf("       |");
         for (k = 0; k < zdepth; k ++) {
-            printf(" %3d ", k);
+            printf(" %3zd ", k);
         }
         printf("\n-------|------------------------\n");
         printf("  y    |\n");
 
         for (j = 0; j < ydepth; j ++) {
-            printf("    %2d |", j);
+            printf("    %2zd |", j);
             for (k = 0; k < zdepth; k ++) {
                 printf("  %03d", data[i][j][k]);
             }
@@ -25,9 +25,13 @@ void plot(int *** data, int xdepth, int ydepth, int zdepth) {
     }
 }
 
+void hello() {
+    printf("hello world\n");
+}
+
 /* A main with some test data, so we can compile just this file with `gcc plotter.c -o test` and run ./test */
 int main(int argc, char ** argv) {
-    int xdepth = 2, ydepth = 3, zdepth = 4;
+    size_t xdepth = 2, ydepth = 3, zdepth = 4;
     size_t i, j, k;
 
     /* allocate memory and assign xyz values */
