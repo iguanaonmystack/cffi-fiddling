@@ -7,6 +7,8 @@ ffibuilder.cdef('''
     void plot(int *** data, int xdepth, int ydepth, int zdepth);
     void hello(char * name);
     void numbers(int * data, size_t size);
+    void *mymalloc(size_t size);
+    void myfree(void *ptr);
 ''')
 ffibuilder.set_source("_plotter_cffi",
 """

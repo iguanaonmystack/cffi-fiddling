@@ -3,6 +3,16 @@
 
 #include "plotter.h"
 
+void *mymalloc(size_t size) {
+    void * mem = malloc(size);
+    fprintf(stderr, "allocated %zd bytes at %p\n", size, mem);
+    return mem;
+}
+void myfree(void *ptr) {
+    fprintf(stderr, "freeing memory at %p\n", ptr);
+    free(ptr);
+}
+
 void plot(int *** data, size_t xdepth, size_t ydepth, size_t zdepth) {
     size_t i, j, k;
     for (i = 0; i < xdepth; i ++) {

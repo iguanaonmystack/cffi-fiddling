@@ -21,15 +21,16 @@ def main(args):
     xdepth = 2
     ydepth = 3
     zdepth = 4
-    data = ffi.new("int**[]", xdepth)
-    owned_memory = [data] # Not sure if this reference list is needed or not...
+    allocator = ffi.new_allocator(lib.mymalloc, lib.myfree)
+    data = allocator("int**[]", xdepth)
+    owned_memory = [data] # Needed to avoid freeing memory when the cffi python container goes out of scope
     print(data)
     for i in range(xdepth):
-        inner_data = ffi.new("int*[]", ydepth)
+        inner_data = allocator("int*[]", ydepth)
         owned_memory.append(inner_data)
         data[i] = inner_data
         for j in range(ydepth):
-            inner_inner_data = ffi.new("int[]", zdepth)
+            inner_inner_data = allocator("int[]", zdepth)
             owned_memory.append(inner_inner_data)
             data[i][j] = inner_inner_data
             for k in range(zdepth):
