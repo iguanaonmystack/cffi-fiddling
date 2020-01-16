@@ -4,15 +4,16 @@ from cffi import FFI
 
 ffibuilder = FFI()
 ffibuilder.cdef('''
-    void plot(int *** data, int xdepth, int ydepth, int zdepth); 
-    void hello();
+    void plot(int *** data, int xdepth, int ydepth, int zdepth);
+    void hello(char * name);
+    void numbers(int * data, size_t size);
 ''')
 ffibuilder.set_source("_plotter_cffi",
 """
-     #include "plotter.h"
+    #include "plotter.h"
 """,
-     sources=['plotter.c'],
-     libraries=[])
+    sources=['plotter.c'],
+    libraries=[])
 
 if __name__ == "__main__":
     ffibuilder.compile(verbose=True)

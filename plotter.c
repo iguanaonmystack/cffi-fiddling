@@ -25,8 +25,19 @@ void plot(int *** data, size_t xdepth, size_t ydepth, size_t zdepth) {
     }
 }
 
-void hello() {
-    printf("hello world\n");
+void hello(char * name) {
+    printf("hello %s\n", name);
+}
+
+void numbers(int * data, size_t size) {
+    size_t i;
+    for (i = 0; i < size; i ++) {
+        if (i != 0) {
+            printf(", ");
+        }
+        printf("%d", data[i]);
+    }
+    printf("\n");
 }
 
 /* A main with some test data, so we can compile just this file with `gcc plotter.c -o test` and run ./test */
