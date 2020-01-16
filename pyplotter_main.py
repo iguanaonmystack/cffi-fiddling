@@ -18,8 +18,24 @@ def main(args):
     lib.numbers(numbers, 10)
 
     # now to build an equivalent structure to the plotter.c test...
-    
-
+    xdepth = 2
+    ydepth = 3
+    zdepth = 4
+    data = ffi.new("int**[]", xdepth)
+    owned_memory = [data] # Not sure if this reference list is needed or not...
+    print(data)
+    for i in range(xdepth):
+        inner_data = ffi.new("int*[]", ydepth)
+        owned_memory.append(inner_data)
+        data[i] = inner_data
+        for j in range(ydepth):
+            inner_inner_data = ffi.new("int[]", zdepth)
+            owned_memory.append(inner_inner_data)
+            data[i][j] = inner_inner_data
+            for k in range(zdepth):
+                data[i][j][k] = (i * 100) + (j * 10) + (k);
+    lib.plot(data, xdepth, ydepth, zdepth)
+    print(owned_memory)
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
