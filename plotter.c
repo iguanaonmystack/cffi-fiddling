@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "plotter.h"
+
 void plot(int *** data, int xdepth, int ydepth, int zdepth) {
     size_t i, j, k;
     for (i = 0; i < xdepth; i ++) {
