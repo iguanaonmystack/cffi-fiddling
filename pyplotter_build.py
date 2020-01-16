@@ -4,8 +4,9 @@ from cffi import FFI
 
 ffibuilder = FFI()
 ffibuilder.cdef('''
+    extern int ** data[2];
     extern char * mystring;
-    void plot(int *** data, int xdepth, int ydepth, int zdepth);
+    void plot(int xdepth, int ydepth, int zdepth);
     void hello(char * name);
     void numbers(int * data, size_t size);
     void *mymalloc(size_t size);

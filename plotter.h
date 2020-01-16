@@ -1,8 +1,9 @@
 /* plotter.h */
 
+extern int ** data[2];
 extern char * mystring;
 
-extern void plot(int *** data, size_t xdepth, size_t ydepth, size_t zdepth);
+extern void plot(size_t xdepth, size_t ydepth, size_t zdepth);
 extern void hello(char * name);
 extern void numbers(int * data, size_t size);
 

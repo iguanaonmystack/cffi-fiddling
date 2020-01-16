@@ -32,20 +32,19 @@ def main(args):
     xdepth = 2
     ydepth = 3
     zdepth = 4
-    data = allocator("int**[]", xdepth)
-    owned_memory = [data] # Needed to avoid freeing memory when the cffi python container goes out of scope
-    print(data)
+    owned_memory = [] # Needed to avoid freeing memory when the cffi python container goes out of scope
+    print(lib.data)
     for i in range(xdepth):
         inner_data = allocator("int*[]", ydepth)
         owned_memory.append(inner_data)
-        data[i] = inner_data
+        lib.data[i] = inner_data
         for j in range(ydepth):
             inner_inner_data = allocator("int[]", zdepth)
             owned_memory.append(inner_inner_data)
-            data[i][j] = inner_inner_data
+            lib.data[i][j] = inner_inner_data
             for k in range(zdepth):
-                data[i][j][k] = (i * 100) + (j * 10) + (k);
-    lib.plot(data, xdepth, ydepth, zdepth)
+                lib.data[i][j][k] = (i * 100) + (j * 10) + (k);
+    lib.plot(xdepth, ydepth, zdepth)
     print(owned_memory)
 
 if __name__ == '__main__':

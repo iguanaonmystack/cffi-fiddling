@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "plotter.h"
+int ** data[2];
 
 char * mystring;
 
@@ -15,7 +16,7 @@ void myfree(void *ptr) {
     free(ptr);
 }
 
-void plot(int *** data, size_t xdepth, size_t ydepth, size_t zdepth) {
+void plot(size_t xdepth, size_t ydepth, size_t zdepth) {
     size_t i, j, k;
     for (i = 0; i < xdepth; i ++) {
         printf("x = %2zd |      z\n", i);
@@ -58,7 +59,6 @@ int main(int argc, char ** argv) {
     size_t i, j, k;
 
     /* allocate memory and assign xyz values */
-    int *** data = malloc(sizeof(int **) * xdepth);
     for (i = 0; i < xdepth; i ++) {
         data[i] = malloc(sizeof(int *) * ydepth);
         for (j = 0; j < ydepth; j ++) {
@@ -69,7 +69,7 @@ int main(int argc, char ** argv) {
         }
     }
 
-    plot(data, xdepth, ydepth, zdepth);
+    plot(xdepth, ydepth, zdepth);
 
     /* cleanup */
     for (i = 0; i < xdepth; i ++) {
@@ -81,5 +81,4 @@ int main(int argc, char ** argv) {
         }
         free(data[i]); data[i] = NULL;
     }
-    free(data); data = NULL;
 }
