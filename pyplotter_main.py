@@ -4,8 +4,19 @@ import sys
 from _plotter_cffi import ffi, lib
 
 def main(args):
+    # use allocator instead of ffi.new, using plotter's debug malloc and free.
+    allocator = ffi.new_allocator(lib.mymalloc, lib.myfree)
+
     # cffi converts bytestrings to char * for us
     lib.hello(b"there");
+    print('creating mystring')
+    lib.mystring = allocator('char[]', b'beep')
+    # (this fails because the object created by ffi.new/allocator instantly gets gc'd, and it owned the memory)
+    print('mystring assigned but now it has dud memory')
+    my_string_in_python_dont_delete_me = allocator('char[]', b'beep')
+    lib.mystring = my_string_in_python_dont_delete_me
+    # Okay /now/ mystring has valid memory for the duration of this function
+    print('Better!')
 
     # create some numbers
     numbers = ffi.new("int[]", 10)
@@ -21,7 +32,6 @@ def main(args):
     xdepth = 2
     ydepth = 3
     zdepth = 4
-    allocator = ffi.new_allocator(lib.mymalloc, lib.myfree)
     data = allocator("int**[]", xdepth)
     owned_memory = [data] # Needed to avoid freeing memory when the cffi python container goes out of scope
     print(data)

@@ -3,6 +3,8 @@
 
 #include "plotter.h"
 
+char * mystring;
+
 void *mymalloc(size_t size) {
     void * mem = malloc(size);
     fprintf(stderr, "allocated %zd bytes at %p\n", size, mem);

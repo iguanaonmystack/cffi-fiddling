@@ -4,6 +4,7 @@ from cffi import FFI
 
 ffibuilder = FFI()
 ffibuilder.cdef('''
+    extern char * mystring;
     void plot(int *** data, int xdepth, int ydepth, int zdepth);
     void hello(char * name);
     void numbers(int * data, size_t size);
